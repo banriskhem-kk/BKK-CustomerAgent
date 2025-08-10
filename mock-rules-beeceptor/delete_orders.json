@@ -1,0 +1,28 @@
+When following condition is matched (for request)
+
+DELETE Request path contains /orders
+AND Request path matches a reg /(?<order_id>ORD-\d{4})
+
+
+Response headers
+{
+  "Content-Type": "application/json"
+}
+
+Response Body
+
+  {{#if (data-store 'get' (concat 'order_placed_at_' (pathParam 'order_id')))}}
+    {{data-store 'set' (concat 'order_status_' (pathParam 'order_id')) 'cancelled'}}
+    {{data-store 'set' (concat 'order_refunded_' (pathParam 'order_id')) true}}
+    {
+      "status": "cancelled",
+      "refunded": true
+    }
+{{else}}
+    {
+      "status": "error",
+      "message": "Order not found"
+    }
+{{/if}}
+
+

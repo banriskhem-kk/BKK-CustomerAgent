@@ -1,0 +1,39 @@
+When following condition is matched (for request)
+
+POST Request path contains /orders
+AND Request path matches a reg /(?<order_id>ORD-\d{4})
+
+
+Response headers
+{
+  "Content-Type": "application/json"
+}
+
+Response Body
+
+{{data-store 'set' (concat 'order_placed_at_' (body 'order_id')) (now 'iso')}}
+{{data-store 'set' (concat 'order_status_' (body 'order_id')) (body 'status')}}
+{{data-store 'set' (concat 'order_product_' (body 'order_id')) (body 'product')}}
+`{{data-store 'set' (concat 'order_delivery_time_' (body 'order_id')) (now '{days: 5}' 'iso')}}`
+
+{
+  "success": true,
+  "message": "Order created successfully",
+  "order_id": {{body 'order_id'}},
+  "placed_at": "{{now 'iso'}}",
+  "status": "{{body 'status'}}",
+  "shipping_status": "not shipped",
+  "expected_delivery": {{data-store 'get' (concat 'order_delivery_time_' (body 'order_id'))}}
+
+  "product": {
+    "id": "{{body 'product_id'}}",
+    "name": "{{body 'product_name'}}",
+    "quantity": {{body 'product_quantity'}},
+  },
+  "policy": {
+    "cancellation_window_hours": {{body 'cancel_time'}},
+    "non_refundable": {{#if (body 'refund_flag' 'true')}}true{{else}}false{{/if}}
+    "block_within_hours_of_delivery": {{body 'block_hours'}}
+  },
+}
+

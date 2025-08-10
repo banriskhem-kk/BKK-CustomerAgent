@@ -1,0 +1,30 @@
+When following condition is matched (for request)
+
+GET Request path contains /orders
+AND Request path matches a reg /(?<order_id>ORD-\d{4})
+
+
+Response headers
+{
+  "Content-Type": "application/json"
+}
+
+Response Body
+
+{{#if (data-store 'get' (concat 'order_placed_at_' (pathParam 'order_id')))}}
+  {
+    "success": true,
+    "status": "{{data-store 'get' (concat 'order_status_' (pathParam 'order_id'))}}",
+   "placed_at": "{{data-store 'get' (concat 'order_placed_at_' (pathParam 'order_id'))}}",
+    "estimated_delivery": "{{data-store 'get' (concat 'order_delivery_time_' (pathParam 'order_id'))}}",
+    "product": "{{data-store 'get' (concat 'order_product_' (pathParam 'order_id'))}}"
+  }
+{{else}}
+  {
+    "success": false,
+    "message": "Order not found"
+  }
+{{/if}}
+
+
+

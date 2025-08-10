@@ -1,0 +1,19 @@
+When following condition is matched (for request)
+
+POST Request path contains /delivery
+AND Request path matches a reg /(?<order_id>ORD-\d{4})
+
+
+Response headers
+{
+  "Content-Type": "application/json"
+}
+
+Response Body
+{
+  "success": true,
+  "order_id": "{{body 'order_id'}}",
+  "shipping_status": "{{body 'shipping_status'}}",
+  "last_update": "{{now 'iso'}}",
+  "expected_delivery": "{{data-store 'get' (concat 'order_delivery_time_' (body 'order_id'))}}"
+}
