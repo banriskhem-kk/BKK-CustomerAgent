@@ -60,6 +60,11 @@ git clone https://github.com/banriskhem-kk/CustomerAgent-BKK.git
 Navigate to the project directory:cd CustomerAgent-BKK
 
 Install dependencies
+
+Make sure you have Ollama installed https://ollama.com/download
+
+ollama pull <model_name>
+
 pip install -r requirements.txt
 
 Configure environment variables (e.g., API keys, database connections) in a .env file.
