@@ -46,7 +46,7 @@ Orchestrator -> API -> User: final reply
 ```
 
 
-## Installation
+## Installation (use python3.10 and above)
 
 Without using Docker,
 
@@ -54,19 +54,21 @@ Without using Docker,
 From terminal, clone the repository: 
 
 ```bash
-git clone https://github.com/banriskhem-kk/CustomerAgent-BKK.git
+git clone https://github.com/banriskhem-kk/BKK-CustomerAgent.git
 ```
 
-Navigate to the project directory:cd CustomerAgent-BKK
+Navigate to the project directory:cd BKK-CustomerAgent
 
 Install dependencies
-
+```
 Make sure you have Ollama installed https://ollama.com/download
 
 ollama pull <model_name>
+```
 
+```
 pip install -r requirements.txt
-
+```
 Configure environment variables (e.g., API keys, database connections) in a .env file.
 
 ```
